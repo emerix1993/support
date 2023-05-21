@@ -13,9 +13,59 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import json
+# from dataclasses import dataclass, asdict
+import requests
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path
+from django.conf import settings
+
+POKEMONS = {}
+
+
+# @dataclass
+# class Pokemon:
+#     id: int
+#     name: str
+#     height: int
+#     weight: int
+#     base_experience: int
+
+def get_pokemon(request, name):
+    if name in POKEMONS:
+        data = POKEMONS[name]
+    else:
+        url = settings.POKEAPI_BASE_URL + f"/{name}"
+        response = requests.get(url)
+        data = response.json()
+        POKEMONS[name] = data
+
+    pokemon_info = {"id": data["id"],
+                    "name": name,
+                    "height": data["height"],
+                    "weight": data["weight"],
+                    "baseExperience": data["base_experience"]}
+    fields = ("id", "name", "height", "weight", "baseExperience")
+    result = {field: pokemon_info[field] for field in fields}
+    return HttpResponse(content_type="application/json", content=json.dumps(result))
+
+
+def all_pokemons(request):
+    return HttpResponse(content_type="application/json", content=json.dumps(POKEMONS))
+
+
+def delete_pokemons(request, name):
+    if name in POKEMONS:
+        del POKEMONS[name]
+        return HttpResponse(content_type="application/json", content=json.dumps({"message": "Pokemon deleted"}))
+    else:
+        return HttpResponse(content_type="application/json", content=json.dumps({"message": "Pokemon not found"}))
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("pokeapi/<str:name>/", get_pokemon),
+    path("pokeapi/pokemons", all_pokemons),
+    path("pokeapi/delete/<str:name>", delete_pokemons)
 ]
