@@ -32,6 +32,15 @@ POKEMONS = {}
 #     weight: int
 #     base_experience: int
 
+def pokemon_handler(request, name):
+    if request.method == 'GET':
+        return get_pokemon(request,name)
+    elif request.method == 'DELETE':
+        return delete_pokemons(request,name)
+    else:
+        return HttpResponse(status=405)
+
+
 def get_pokemon(request, name):
     if name in POKEMONS:
         data = POKEMONS[name]
