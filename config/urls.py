@@ -13,16 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import json
-from dataclasses import dataclass, asdict
-import requests
 from django.contrib import admin
-from django.http import HttpResponse
-from django.urls import path
-from django.conf import settings
+from django.urls import path, include
+
+from core.users import UserRegistrationApiView
+from core.views import UserRegistrationApiView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("users1/",UserRegistrationApiView.as_view()),
+    path("users/", UserRegistrationApiView.as_view()),
+    path("auth/",include("authentication.urls")),
+
     # path("pokeapi/<str:name>/", pokemon_handler),
     # path("pokeapi/pokemons", all_pokemons),
 ]
