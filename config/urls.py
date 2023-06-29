@@ -16,8 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from core.users import UserRegistrationApiView
-from core.views import UserRegistrationApiView
+from users.api import UserRegistrationApiView
 
 
 urlpatterns = [
@@ -25,6 +24,11 @@ urlpatterns = [
     path("users1/",UserRegistrationApiView.as_view()),
     path("users/", UserRegistrationApiView.as_view()),
     path("auth/",include("authentication.urls")),
+    path("tickets/",include("tickets.urls")),
+    path("users/",include("users.urls")),
+    
+
+
 
     # path("pokeapi/<str:name>/", pokemon_handler),
     # path("pokeapi/pokemons", all_pokemons),

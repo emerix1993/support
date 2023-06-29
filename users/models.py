@@ -1,7 +1,6 @@
 from django.db import models
-from core.head import UserManager
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
-
+from users.managers import UserManager
 
 class User(AbstractBaseUser,PermissionsMixin):
     username = models.CharField(max_length=100, null=True)
@@ -26,24 +25,3 @@ class User(AbstractBaseUser,PermissionsMixin):
         if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
         return self.email
-
-
-class Request(models.Model):
-    title = models.CharField(max_length=100)
-    text = models.TextField()
-    visibility = models.BooleanField(default=True)
-    status = models.PositiveSmallIntegerField()
-    user = models.ForeignKey(User, on_delete=models.RESTRICT,related_name="user_request")
-    manager = models.ForeignKey(User, on_delete=models.RESTRICT,related_name="manager_request")
-
-    class Meta:
-        db_table = "requests"
-
-
-class Message(models.Model):
-    text = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.RESTRICT,related_name="messages")
-    request = models.ForeignKey(Request, on_delete=models.RESTRICT,related_name="messages")
-
-    class Meta:
-        db_table = "messages"

@@ -13,7 +13,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -38,7 +37,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = ['rest_framework', 'rest_framework_simplejwt', ]
 
-LOCAL_APPS = ['core',]
+LOCAL_APPS = ['users','tickets','authentication',]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -123,7 +122,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 
-AUTH_USER = "core.User"
+AUTH_USER = "users.User"
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -136,4 +135,4 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',)
 }
 
-AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = "users.User"
