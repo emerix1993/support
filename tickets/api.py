@@ -59,14 +59,13 @@ class TicketAPIViewSet(ModelViewSet):
     @action(detail=True, methods=["PATCH"])
     def take(self, request, pk=None):
         ticket = self.get_object()
-        return Response("Ok")
-        # user = self.request.user
-        # if user.role != Role.MANAGER:
-        #     raise PermissionDenied("You don't have rights", 403)
+        user = self.request.user
+        if user.role != Role.MANAGER:
+            raise PermissionDenied("You don't have rights", 403)
         serializer = TicketAssignSerializer(data={"ticket_id": request.user.id})
         serializer.is_valid()
         ticket = serializer.assign(ticket,User)
-        # return Response(TicketSerializer(ticket).data)
+        return Response(TicketSerializer(ticket).data)
 
 
 
