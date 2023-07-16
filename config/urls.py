@@ -21,15 +21,8 @@ from users.api import UserRegistrationApiView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("users1/",UserRegistrationApiView.as_view()),
     path("users/", UserRegistrationApiView.as_view()),
     path("auth/",include("authentication.urls")),
     path("tickets/",include("tickets.urls")),
-    path("users/",include("users.urls")),
-    
 
-
-
-    # path("pokeapi/<str:name>/", pokemon_handler),
-    # path("pokeapi/pokemons", all_pokemons),
 ]

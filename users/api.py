@@ -13,6 +13,5 @@ class UserRegistrationApiView(CreateAPIView):
         self.perform_create(serializer)
 
         public_serializer = UserPublicSerializer(serializer.instance)
-
         return Response(public_serializer.data, status=status.HTTP_201_CREATED)
 

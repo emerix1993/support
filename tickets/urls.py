@@ -4,7 +4,4 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register("", TicketAPIViewSet, basename="tickets")
-urlpatterns = router.urls
-# + [path("<int:ticket_id>/take/", TicketAPIViewSet.as_view())]
-# urlpatterns = router.urls + [path("<int:ticket_id>/take/", MessageListCreateAPIView.as_view())
-# ]
+urlpatterns = router.urls + [path("<int:ticket_id>/messages/", MessageListCreateAPIView.as_view())]
