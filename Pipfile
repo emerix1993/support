@@ -7,6 +7,10 @@ name = "pypi"
 django = "~=4.2"
 djangorestframework = "~=3.14"
 djangorestframework-simplejwt = "*"
+drf-yasg = "*"
+gunicorn = "~=20.1"
+black = "*"
+isort = "*"
 
 [dev-packages]
 black = "*"

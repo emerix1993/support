@@ -1,7 +1,8 @@
-from users.serializers import UserCreateSerializer,UserPublicSerializer
+from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
-from rest_framework import status
+
+from users.serializers import UserCreateSerializer, UserPublicSerializer
 
 
 class UserRegistrationApiView(CreateAPIView):
@@ -14,4 +15,3 @@ class UserRegistrationApiView(CreateAPIView):
 
         public_serializer = UserPublicSerializer(serializer.instance)
         return Response(public_serializer.data, status=status.HTTP_201_CREATED)
-

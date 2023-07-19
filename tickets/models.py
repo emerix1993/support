@@ -1,5 +1,6 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
+
 from tickets.constants import TicketStatus
 
 
@@ -8,8 +9,12 @@ class Ticket(models.Model):
     text = models.TextField()
     visibility = models.BooleanField(default=True)
     status = models.PositiveSmallIntegerField(default=TicketStatus.CLOSED)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="user_tickets")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="manager_tickets",null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="user_tickets"
+    )
+    manager = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.RESTRICT, related_name="manager_tickets", null=True
+    )
 
     class Meta:
         db_table = "tickets"
