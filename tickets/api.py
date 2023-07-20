@@ -21,8 +21,17 @@ from tickets.serializers import (
     TicketSerializer,
 )
 from users.roles import Role
+from config.celery import celery_app
+from time import sleep
 
 User = get_user_model()
+
+
+@celery_app.task
+def send_email_to_user():
+    print("<<<<<<<Sending email to user")
+    sleep(5)
+    print("<<<<<<<Email sent")
 
 
 class TicketAPIViewSet(ModelViewSet):
@@ -30,9 +39,8 @@ class TicketAPIViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        send_email_to_user.delay()
         all_tickets = Ticket.objects.all()
-        print(user.role)
-        print(all_tickets)
         if user.role == Role.ADMIN:
             return all_tickets
         elif user.role == Role.MANAGER:

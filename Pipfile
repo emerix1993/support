@@ -11,6 +11,8 @@ drf-yasg = "*"
 gunicorn = "~=20.1"
 black = "*"
 isort = "*"
+celery = {verison = "==5.3.1", extras = ["redis"]}
+redis = "*"
 
 [dev-packages]
 black = "*"
